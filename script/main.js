@@ -322,3 +322,103 @@ const resolveFetch = () => {
 };
 
 resolveFetch().then(animationTimeline());
+
+// ===== MAGICAL ENHANCEMENTS =====
+
+// Create confetti burst on page load
+function createConfettiBurst() {
+  const colors = ['#ff1744', '#f50057', '#d500f9', '#651fff', '#00b0ff', '#00e676', '#ffeb3b'];
+  const confettiCount = 150;
+
+  for (let i = 0; i < confettiCount; i++) {
+    setTimeout(() => {
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti-piece');
+      confetti.style.left = Math.random() * 100 + '%';
+      confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.animationDelay = Math.random() * 0.5 + 's';
+      confetti.style.animationDuration = (Math.random() * 2 + 3) + 's';
+      confetti.style.width = (Math.random() * 6 + 4) + 'px';
+      confetti.style.height = (Math.random() * 10 + 8) + 'px';
+      document.body.appendChild(confetti);
+
+      setTimeout(() => confetti.remove(), 5000);
+    }, i * 15);
+  }
+}
+
+// Create floating heart particles
+function createHeartParticle() {
+  const hearts = ['💖', '💕', '💗', '💓', '💝', '❤️', '🌹'];
+  const heart = document.createElement('div');
+  heart.classList.add('heart-particle');
+  heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+  heart.style.left = Math.random() * 100 + '%';
+  heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+  heart.style.animationDelay = Math.random() * 3 + 's';
+  heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 8000);
+}
+
+// Create sparkle effect
+function createSparkle(x, y) {
+  const sparkle = document.createElement('div');
+  sparkle.classList.add('sparkle');
+  sparkle.style.left = x + 'px';
+  sparkle.style.top = y + 'px';
+  sparkle.style.animationDelay = Math.random() * 0.5 + 's';
+  document.body.appendChild(sparkle);
+
+  setTimeout(() => sparkle.remove(), 1500);
+}
+
+// Create floating particles
+function createFloatingParticle() {
+  const particle = document.createElement('div');
+  particle.classList.add('particle');
+  particle.style.left = Math.random() * 100 + '%';
+  particle.style.animationDelay = Math.random() * 5 + 's';
+  particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+  document.body.appendChild(particle);
+
+  setTimeout(() => particle.remove(), 20000);
+}
+
+// Check if coming from Yes/No page
+const urlParams = new URLSearchParams(window.location.search);
+const fromYesPage = urlParams.get('from') === 'yes' || document.referrer.includes('index.html');
+
+// Trigger confetti if coming from Yes page
+if (fromYesPage) {
+  setTimeout(createConfettiBurst, 500);
+}
+
+// Continuous heart particles
+setInterval(createHeartParticle, 800);
+
+// Continuous floating particles
+setInterval(createFloatingParticle, 400);
+
+// Add sparkle effect on mouse move (throttled)
+let lastSparkle = 0;
+document.addEventListener('mousemove', (e) => {
+  const now = Date.now();
+  if (now - lastSparkle > 200) {
+    if (Math.random() > 0.7) {
+      createSparkle(e.clientX, e.clientY);
+    }
+    lastSparkle = now;
+  }
+});
+
+// Add glow effect to special text elements
+setTimeout(() => {
+  const specialTexts = document.querySelectorAll('.wish-hbd, .idea-5');
+  specialTexts.forEach(text => {
+    text.classList.add('glow-text');
+  });
+}, 3000);
+
+console.log('✨ Magical Valentine effects loaded! 💖');

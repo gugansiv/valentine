@@ -390,3 +390,206 @@ body {
   border: 4px solid var(--rose-gold);
   box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.8), var(--shadow-lg);
 }
+
+/* ===== MAGICAL ENHANCEMENTS ===== */
+
+/* Sparkle effect */
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.sparkle {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle, #fff 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: sparkle 1.5s ease-in-out infinite;
+  z-index: 9999;
+}
+
+/* Floating particles */
+.particle {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: float-particle 15s linear infinite;
+  z-index: 1;
+}
+
+@keyframes float-particle {
+  0% {
+    transform: translateY(100vh) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) translateX(100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Enhanced entrance animations */
+.container > div {
+  animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Glow effect on hover for interactive elements */
+.fake-btn:hover {
+  box-shadow: 0 0 20px rgba(239, 35, 60, 0.6), var(--shadow-sm);
+}
+
+/* Shimmer text effect */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.one h1 {
+  background: linear-gradient(
+    90deg,
+    var(--text-primary) 0%,
+    #ff1744 25%,
+    var(--text-primary) 50%,
+    #ff1744 75%,
+    var(--text-primary) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+/* Magical heart particles */
+.heart-particle {
+  position: fixed;
+  font-size: 20px;
+  opacity: 0;
+  pointer-events: none;
+  animation: float-heart 6s ease-in infinite;
+  z-index: 1;
+}
+
+@keyframes float-heart {
+  0% {
+    opacity: 0;
+    transform: translateY(100vh) rotate(0deg) scale(0.5);
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px) rotate(360deg) scale(1);
+  }
+}
+
+/* Enhanced balloon animations */
+.baloons img {
+  animation: balloon-float 4s ease-in-out infinite;
+}
+
+@keyframes balloon-float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-15px) rotate(2deg);
+  }
+  75% {
+    transform: translateY(-10px) rotate(-2deg);
+  }
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Entrance confetti effect */
+.confetti-piece {
+  position: fixed;
+  width: 8px;
+  height: 12px;
+  background: #f0f;
+  top: -10px;
+  opacity: 0;
+  pointer-events: none;
+  animation: confetti-fall 4s linear;
+  z-index: 9999;
+}
+
+@keyframes confetti-fall {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100vh) rotate(720deg);
+  }
+}
+
+/* Glowing text effect for special moments */
+.glow-text {
+  text-shadow: 
+    0 0 10px rgba(255, 23, 68, 0.5),
+    0 0 20px rgba(255, 23, 68, 0.3),
+    0 0 30px rgba(255, 23, 68, 0.2);
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    text-shadow: 
+      0 0 10px rgba(255, 23, 68, 0.5),
+      0 0 20px rgba(255, 23, 68, 0.3),
+      0 0 30px rgba(255, 23, 68, 0.2);
+  }
+  50% {
+    text-shadow: 
+      0 0 20px rgba(255, 23, 68, 0.8),
+      0 0 30px rgba(255, 23, 68, 0.6),
+      0 0 40px rgba(255, 23, 68, 0.4);
+  }
+}
+
+/* Smooth transitions for all elements */
+* {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
