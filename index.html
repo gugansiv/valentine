@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,35 +8,49 @@
   <title>Will You Be My Valentine? 💖</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Pacifico&family=Cormorant+Garamond:wght@600;700&family=Nunito+Sans:wght@400;600;700&display=swap"
+    rel="stylesheet" />
   <link rel="shortcut icon" type="image/png" href="./img/heart.svg" />
+  <link rel="stylesheet" href="style/style.css" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Nunito', sans-serif;
-      min-height: 100vh;
+    /* Yes/No Page Styles */
+    #yesNoSection {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: center;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
       background-size: 400% 400%;
       animation: gradientShift 15s ease infinite;
-      overflow: hidden;
-      position: relative;
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    #yesNoSection.hidden {
+      opacity: 0;
+      transform: scale(0.8);
+      pointer-events: none;
     }
 
     @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
     }
 
-    /* Floating hearts background */
     .hearts-container {
       position: fixed;
       top: 0;
@@ -58,19 +73,22 @@
         opacity: 0;
         transform: translateY(100vh) rotate(0deg);
       }
+
       10% {
         opacity: 1;
       }
+
       90% {
         opacity: 1;
       }
+
       100% {
         opacity: 0;
         transform: translateY(-100px) rotate(360deg);
       }
     }
 
-    .container {
+    .yes-no-container {
       position: relative;
       z-index: 10;
       text-align: center;
@@ -89,6 +107,7 @@
         opacity: 0;
         transform: scale(0.8);
       }
+
       to {
         opacity: 1;
         transform: scale(1);
@@ -104,8 +123,15 @@
     }
 
     @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-20px);
+      }
     }
 
     .bear-image img {
@@ -115,7 +141,7 @@
       filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
     }
 
-    h1 {
+    .yes-no-container h1 {
       font-family: 'Pacifico', cursive;
       font-size: 2.5rem;
       color: #ff1744;
@@ -125,8 +151,15 @@
     }
 
     @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
     }
 
     .question {
@@ -183,9 +216,12 @@
     }
 
     @keyframes glow {
-      0%, 100% {
+
+      0%,
+      100% {
         box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
       }
+
       50% {
         box-shadow: 0 5px 30px rgba(245, 87, 108, 0.8);
       }
@@ -207,7 +243,6 @@
       background: linear-gradient(135deg, #d0d0d0 0%, #a0a0a0 100%);
     }
 
-    /* Success state */
     .success-container {
       display: none;
       text-align: center;
@@ -241,9 +276,11 @@
       0% {
         transform: scale(0) rotate(-180deg);
       }
+
       50% {
         transform: scale(1.2) rotate(10deg);
       }
+
       100% {
         transform: scale(1) rotate(0deg);
       }
@@ -262,7 +299,6 @@
       box-shadow: 0 10px 30px rgba(102, 126, 234, 0.6);
     }
 
-    /* Confetti */
     .confetti {
       position: fixed;
       width: 10px;
@@ -278,13 +314,22 @@
       }
     }
 
-    /* Responsive */
+    /* Story Section */
+    #storySection {
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+
+    #storySection.visible {
+      opacity: 1;
+    }
+
     @media (max-width: 600px) {
-      .container {
+      .yes-no-container {
         padding: 40px 20px;
       }
 
-      h1 {
+      .yes-no-container h1 {
         font-size: 2rem;
       }
 
@@ -307,39 +352,148 @@
     }
   </style>
 </head>
+
 <body>
-  <!-- Floating hearts background -->
-  <div class="hearts-container" id="heartsContainer"></div>
+  <!-- Yes/No Section -->
+  <div id="yesNoSection">
+    <div class="hearts-container" id="heartsContainer"></div>
 
-  <div class="container">
-    <!-- Initial question state -->
-    <div id="questionContainer">
-      <div class="bear-image">
-        <img src="./img/happy-bear.png" alt="Cute bear" id="bearImage">
+    <div class="yes-no-container">
+      <div id="questionContainer">
+        <div class="bear-image">
+          <img src="./img/happy-bear.png" alt="Cute bear" id="bearImage">
+        </div>
+        <h1>💖 Hey There! 💖</h1>
+        <p class="question">Will you be my Valentine?</p>
+        <div class="buttons">
+          <button id="yesBtn">Yes! 💕</button>
+          <button id="noBtn">No</button>
+        </div>
       </div>
-      <h1>💖 Hey There! 💖</h1>
-      <p class="question">Will you be my Valentine?</p>
-      <div class="buttons">
-        <button id="yesBtn">Yes! 💕</button>
-        <button id="noBtn">No</button>
-      </div>
-    </div>
 
-    <!-- Success state -->
-    <div class="success-container" id="successContainer">
-      <h1>Yayyyy!!! 🎉</h1>
-      <div class="celebration-image">
-        <img src="./img/celebration-bears.png" alt="Celebration">
+      <div class="success-container" id="successContainer">
+        <h1>Yayyyy!!! 🎉</h1>
+        <div class="celebration-image">
+          <img src="./img/celebration-bears.png" alt="Celebration">
+        </div>
+        <p class="question">I knew you'd say yes! Let me show you something special...</p>
+        <button class="continue-btn" id="continueBtn">
+          Continue to Our Story ✨
+        </button>
       </div>
-      <p class="question">I knew you'd say yes! Let me show you something special...</p>
-      <button class="continue-btn" onclick="window.location.href='story.html'">
-        Continue to Our Story ✨
-      </button>
     </div>
   </div>
 
+  <!-- Story Section -->
+  <div id="storySection">
+    <div class="container">
+      <div class="one">
+        <h1 class="one">
+          Hey
+          <span id="name">My Love</span>
+        </h1>
+        <p class="two" id="greetingText">You are the most beautiful chapter of my life.</p>
+      </div>
+      <div class="three">
+        <p>It's Valentine!!! :D</p>
+      </div>
+      <div class="four">
+        <div class="text-box">
+          <p class="hbd-chatbox">
+            "Your love is the poetry my heart has always wanted to write."
+          </p>
+          <p class="fake-btn">Forever Yours</p>
+        </div>
+      </div>
+      <div class="five">
+        <p class="idea-1">That's what I was going to do.</p>
+        <p class="idea-2">But then I stopped.</p>
+        <p class="idea-3">
+          I realised, I wanted to do something <strong>special</strong>.
+        </p>
+        <p class="idea-4">Because,</p>
+        <p class="idea-5">
+          You are Special
+          <span>:)</span>
+        </p>
+        <p class="idea-6">
+          <span>S</span>
+          <span>O</span>
+        </p>
+      </div>
+      <div class="six">
+        <img src="img/vector.jpg" alt="" class="girl-dp" id="imagePath" />
+        <div class="wish">
+          <h3 class="wish-hbd">Happy Valentine's Day Gorgeous</h3>
+          <h5 id="wishText">In your smile, I see something more beautiful than the stars. You are my forever.</h5>
+        </div>
+      </div>
+      <div class="seven">
+        <div class="baloons">
+          <img src="img/balloon.svg" alt="" />
+          <img src="img/smiling.svg" />
+          <img src="img/heart.svg" />
+          <img src="img/balloon.svg" alt="" />
+          <img src="img/heart.svg" />
+          <img src="img/balloon.svg" alt="" />
+          <img src="img/music-note.svg" alt="" />
+          <img src="img/heart.svg" />
+          <img src="img/balloon.svg" alt="" />
+          <img src="img/heart.svg" />
+          <img src="img/balloon.svg" alt="" />
+          <img src="img/heart.svg" />
+          <img src="img/heart.svg" />
+          <img src="img/music-note.svg" alt="" />
+          <img src="img/smiling.svg" />
+          <img src="img/happy.svg" alt="" />
+          <img src="img/balloon.svg" alt="" />
+          <img src="img/heart.svg" />
+          <img src="img/smiling.svg" />
+        </div>
+      </div>
+      <div class="eight">
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="20" />
+        </svg>
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="20" />
+        </svg>
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="20" />
+        </svg>
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="20" />
+        </svg>
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="20" />
+        </svg>
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="20" />
+        </svg>
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="20" />
+        </svg>
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="20" />
+        </svg>
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="20" />
+        </svg>
+      </div>
+      <div class="nine">
+        <p>You make every day feel like Valentine's.</p>
+        <p id="replay">Watch our story again?</p>
+        <p class="last-smile">:)</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+  <script type="text/babel" src="script/main.js"></script>
+
   <script>
-    // Create floating hearts
+    // Yes/No Page Logic
     const heartsContainer = document.getElementById('heartsContainer');
     function createHeart() {
       const heart = document.createElement('div');
@@ -349,18 +503,20 @@
       heart.style.animationDelay = Math.random() * 5 + 's';
       heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
       heartsContainer.appendChild(heart);
-      
+
       setTimeout(() => heart.remove(), 8000);
     }
 
     setInterval(createHeart, 300);
 
-    // Yes/No button logic
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
     const bearImage = document.getElementById('bearImage');
     const questionContainer = document.getElementById('questionContainer');
     const successContainer = document.getElementById('successContainer');
+    const continueBtn = document.getElementById('continueBtn');
+    const yesNoSection = document.getElementById('yesNoSection');
+    const storySection = document.getElementById('storySection');
 
     let noClickCount = 0;
     const noTexts = [
@@ -374,23 +530,19 @@
       'Pretty please? 🌹'
     ];
 
-    noBtn.addEventListener('click', function() {
+    noBtn.addEventListener('click', function () {
       noClickCount++;
-      
-      // Change bear to sad
+
       bearImage.src = './img/sad-bear.png';
-      
-      // Update no button text
+
       if (noClickCount < noTexts.length) {
         noBtn.textContent = noTexts[noClickCount];
       }
-      
-      // Grow yes button
+
       const currentSize = parseFloat(getComputedStyle(yesBtn).fontSize);
       yesBtn.style.fontSize = (currentSize + 2) + 'px';
       yesBtn.style.padding = (15 + noClickCount * 3) + 'px ' + (40 + noClickCount * 5) + 'px';
-      
-      // Shrink no button
+
       const noSize = parseFloat(getComputedStyle(noBtn).fontSize);
       if (noSize > 12) {
         noBtn.style.fontSize = (noSize - 1) + 'px';
@@ -399,21 +551,24 @@
           noBtn.style.padding = (currentPadding - 1) + 'px ' + (currentPadding * 2 - 2) + 'px';
         }
       }
-      
-      // Shake animation
-      noBtn.style.animation = 'none';
-      setTimeout(() => {
-        noBtn.style.animation = '';
-      }, 10);
     });
 
-    yesBtn.addEventListener('click', function() {
-      // Create confetti
+    yesBtn.addEventListener('click', function () {
       createConfetti();
-      
-      // Show success state
       questionContainer.style.display = 'none';
       successContainer.classList.add('active');
+    });
+
+    continueBtn.addEventListener('click', function () {
+      yesNoSection.classList.add('hidden');
+      setTimeout(() => {
+        yesNoSection.style.display = 'none';
+        storySection.classList.add('visible');
+        // Trigger story animation
+        if (typeof animationTimeline === 'function') {
+          animationTimeline();
+        }
+      }, 1000);
     });
 
     function createConfetti() {
@@ -428,11 +583,12 @@
           confetti.style.animationDelay = Math.random() * 2 + 's';
           confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
           document.body.appendChild(confetti);
-          
+
           setTimeout(() => confetti.remove(), 5000);
         }, i * 30);
       }
     }
   </script>
 </body>
+
 </html>
